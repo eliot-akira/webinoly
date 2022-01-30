@@ -185,7 +185,10 @@ php_install() {
 	local ver=$(conf_read php-ver)
 	
 	sudo apt -y install php${ver}-common php${ver}-cli php${ver}-fpm php${ver}-curl php${ver}-gd php${ver}-imap php${ver}-readline php${ver}-mysql php${ver}-mbstring php${ver}-bcmath php${ver}-mysql php${ver}-opcache php${ver}-zip php${ver}-xml php${ver}-soap php${ver}-imagick php${ver}-msgpack php${ver}-igbinary php${ver}-intl php-pear graphviz ghostscript
-	
+
+	# Removed/deprecated in 7.4
+	[[ $ver =~ ^(7.2|7.3)$ ]] && sudo apt -y install php${ver}-recode
+
 	conf_write php true
 	api-events_update ip2
 	echo "${gre}PHP has been installed successfully! ${end}"
