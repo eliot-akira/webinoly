@@ -169,32 +169,33 @@ conf_write app-version $webyversion
 
 
 # Ping to Webinoly Stats
-if [[ $statskip != "true" ]]; then
-	opt=$setup
-	branch="Public"
+# statskip="true"
+# if [[ $statskip != "true" ]]; then
+# 	opt=$setup
+# 	branch="Public"
 
-	if [[ $new_install == "true" ]]; then
-		type="New"
-	elif [[ $ver == "beta" ]]; then
-		type="Beta"
-	elif [[ -n $update && $ver =~ ^[0-9]{1}\.[0-9]{1,2}\.[0-9]{1,2}$ ]]; then
-		type="Downgrade"
-		webyversion=$(wget --timeout=10 -t 1 -qO- https://api.webinoly.com/check?text=true)
-		opt=$ver
-	elif [[ -n $setup && $ver =~ ^[0-9]{1}\.[0-9]{1,2}\.[0-9]{1,2}$ ]]; then
-		type="Custom"
-		webyversion=$(wget --timeout=10 -t 1 -qO- https://api.webinoly.com/check?text=true)
-		opt=$ver
-	elif [[ -n $update && -n $oldapp ]]; then
-		type="Updates"
-		opt=$oldapp
-	else
-		type="Error"
-		echo "${red}[ERROR] Installation method not recognized!${end}"
-	fi
+# 	if [[ $new_install == "true" ]]; then
+# 		type="New"
+# 	elif [[ $ver == "beta" ]]; then
+# 		type="Beta"
+# 	elif [[ -n $update && $ver =~ ^[0-9]{1}\.[0-9]{1,2}\.[0-9]{1,2}$ ]]; then
+# 		type="Downgrade"
+# 		webyversion=$(wget --timeout=10 -t 1 -qO- https://api.webinoly.com/check?text=true)
+# 		opt=$ver
+# 	elif [[ -n $setup && $ver =~ ^[0-9]{1}\.[0-9]{1,2}\.[0-9]{1,2}$ ]]; then
+# 		type="Custom"
+# 		webyversion=$(wget --timeout=10 -t 1 -qO- https://api.webinoly.com/check?text=true)
+# 		opt=$ver
+# 	elif [[ -n $update && -n $oldapp ]]; then
+# 		type="Updates"
+# 		opt=$oldapp
+# 	else
+# 		type="Error"
+# 		echo "${red}[ERROR] Installation method not recognized!${end}"
+# 	fi
 
-	wget https://api.webinoly.com/stats/?install=${branch}:${webyversion}:${type}:${opt} --referer="Webinoly-Internal-Verified-Stats" --spider --timeout=15 -t 1 -q
-fi
+# 	wget https://api.webinoly.com/stats/?install=${branch}:${webyversion}:${type}:${opt} --referer="Webinoly-Internal-Verified-Stats" --spider --timeout=15 -t 1 -q
+# fi
 
 
 # Update stack!
@@ -234,19 +235,7 @@ if [[ -z $(conf_read stack-build-error-flag) ]]; then
 	[[ $setup == 1 ]] && echo "${gre}${dim}Nginx and some other useful tools have been installed successfully! ${end}"
 	[[ $setup == 2 ]] && echo "${gre}${dim}Nginx, PHP and some other useful tools have been installed successfully! ${end}"
 	[[ $setup == 3 ]] && echo "${gre}${dim}Nginx, PHP, MySQL (MariaDB) and some other useful tools have been installed successfully! ${end}"
-	
-	echo "${blu}"
-	echo "****************************************************************************"
-	echo "************************     D O N A T I O N S     *************************"
-	echo "***    ${bol}If you like Webinoly, buy me a coffee or beer to show support.${end}${blu}    ***"
-	echo "****************************************************************************"
-	echo "*************     Bitcoin: ${end}${dim}1E3Ybo5UcvaAr1MoK4nBnMRFFY9aEMiku3     ${end}${blu}**********"
-	echo "*******   GitHub Sponsors:${end}${dim} https://github.com/sponsors/QROkes     ${end}${blu}**********"
-	echo "***************    PayPal:${end}${dim} https://www.paypal.me/qrokes     ${end}${blu}****************"
-	echo "****************************************************************************"
-	echo "***   ${end}${dim}Your regular donations is what keep this project moving forward.${end}${blu}   ***"
-	echo "****************************************************************************"
-	echo "${end}"
+
 else
 	echo "${red}[ERROR] Sorry, unexpected error during installation and building stack process!${end}"
 fi

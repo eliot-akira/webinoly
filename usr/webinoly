@@ -12,8 +12,6 @@ source /opt/webinoly/lib/bkp
 check_for_parameters $@
 api-events_update wys
 
-ads_block="true" # Don't show ads
-
 if [[ -n $update ]]; then
 	api-events_update wy1
 	webinoly_update
@@ -317,5 +315,4 @@ fi
 
 [[ $(conf_read nginx) == "true" && -z $nginx_not ]] && sudo systemctl reload nginx
 [[ -n $err_cont ]] && exit 1
-[[ -z $ads_block ]] && ads_donate
 api-events_update wye

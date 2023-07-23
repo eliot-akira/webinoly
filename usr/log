@@ -371,5 +371,4 @@ else
 	exit 1
 fi
 
-ads_donate
 api-events_update lge
